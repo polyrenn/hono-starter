@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int           @id @default(autoincrement())
+  email             String        @unique
+  password          String
+  fullName          String
+  phoneNumber       String
+  address           String?
+  profilePicture    String?
+  isVerified        Boolean  @default(false)
+  verificationToken String?
+  tokenExpiry       DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  subscriptions     Subscription[]
+  complaints        Complaint[]
+  installations     Installation[]
+  appointment       Appointment?
+  sessions Session[]
+}
+
+model Appointment {
+  id          Int      @id @default(autoincrement())
+  userId      String      @unique
+  user        User     @relation(fields: [userId], references: [email], onDelete: Cascade)
+  date        String
+  status      String
+  recordId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Subscription {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId        Int
+  plan          Plan     @relation(fields: [planId], references: [id], onDelete: Cascade)
+  startDate     DateTime
+  endDate       DateTime
+  status        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Plan {
+  id            Int           @id @default(autoincrement())
+  name          String
+  description   String
+  price         Float
+  duration      Int
+  subscriptions Subscription[]
+}
+
+model Complaint {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    String
+  description String
+  status      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FAQ {
+  id       Int    @id @default(autoincrement())
+  question String
+  answer   String
+  category String
+}
+
+model Installation {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date        DateTime
+  status      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Salesperson {
+  id        Int    @id @default(autoincrement())
+  name      String
+  email     String @unique
+  phoneNumber String
+}
+
+model Payment {
+  id            Int      @id @default(autoincrement())
+  userId        Int      
+  amount        Float
+  status        String
+  paymentMethod String
+  createdAt     DateTime @default(now())
+}
+
+model Session {
+   id        String   @id
+   userId    Int
+   expiresAt DateTime
+   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

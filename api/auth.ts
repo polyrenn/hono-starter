@@ -6,19 +6,19 @@ import crypto from 'crypto';
 
 import { Resend } from 'resend';
 
-import { db } from '../utils/db';
+import { db } from './utils/db';
 
 //Prisma
 import { Prisma, User } from '@prisma/client';
 
 // Prisma Error Handler
-import withErrorHandling from '../utils/error-handling';
+import withErrorHandling from './utils/error-handling';
 
 // Date
 import dayjs from 'dayjs';
 
 // OTP
-import generateOTP from '../utils/generate-otp';
+import generateOTP from './utils/generate-otp';
 
 const app = new Hono();
 

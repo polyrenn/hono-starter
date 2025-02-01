@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { jwt } from 'hono/jwt';
-import { db } from '../utils/db';
+import { db } from './utils/db';
 
 // Prisma
 import { Appointment, Prisma, User } from '@prisma/client';

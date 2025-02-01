@@ -22,7 +22,7 @@ import appointments from './appointments'
 
 // Prisma
 import { Prisma } from '@prisma/client'
-import { db } from '../utils/db'
+import { db } from './utils/db'
 
 const app = new Hono().basePath('/api')
 

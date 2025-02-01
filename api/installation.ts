@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { db } from '../utils/db';
+import { db } from './utils/db';
 import { env } from 'hono/adapter'
 
 // Prisma

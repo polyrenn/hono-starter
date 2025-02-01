@@ -1,6 +1,7 @@
 {
   "type": "module",
   "scripts": {
+    "build": "prisma db push && prisma generate",
     "start": "vercel dev",
     "deploy": "vercel"
   },
